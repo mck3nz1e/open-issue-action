@@ -1,6 +1,49 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 2932:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(2186)
+const github = __nccwpck_require__(5438)
+
+
+/**
+ * The main function for the action.
+ * @returns {Promise<void>} Resolves when the action is complete.
+ */
+async function run() {
+  try {
+    const token = core.getInput('token');
+    const title = core.getInput('title');
+    const body = core.getInput('body');
+    const assignees = core.getInput('assignees');
+
+    const octokit = github.getOctokit(token);
+
+    const response = await octokit.rest.issues.create({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      title,
+      body,
+      assignees: assignees ? assignees.split(`\n`) : undefined,
+    });
+
+    core.setOutput("issue", response.data);
+
+  } catch (error) {
+    // Fail the workflow run if an error occurs
+    core.setFailed(error.message)
+  }
+}
+
+module.exports = {
+  run
+}
+
+
+/***/ }),
+
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -28909,49 +28952,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 1713:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const core = __nccwpck_require__(2186)
-const github = __nccwpck_require__(5438)
-
-
-/**
- * The main function for the action.
- * @returns {Promise<void>} Resolves when the action is complete.
- */
-async function run() {
-  try {
-    const token = core.getInput('token');
-    const title = core.getInput('title');
-    const body = core.getInput('body');
-    const assignees = core.getInput('assignees');
-
-    const octokit = github.getOctokit(token);
-
-    const response = await octokit.rest.issues.create({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      title,
-      body,
-      assignees: assignees ? assignees.split(`\n`) : undefined,
-    });
-
-    core.setOutput("issue", response.data);
-
-  } catch (error) {
-    // Fail the workflow run if an error occurs
-    core.setFailed(error.message)
-  }
-}
-
-module.exports = {
-  run
-}
-
-
-/***/ }),
-
 /***/ 9491:
 /***/ ((module) => {
 
@@ -30833,18 +30833,12 @@ module.exports = parseParams
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/**
- * The entrypoint for the action.
- */
-const { run } = __nccwpck_require__(1713)
-
-run()
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(2932);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
