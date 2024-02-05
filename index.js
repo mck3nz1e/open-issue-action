@@ -16,7 +16,7 @@ async function run() {
       repo: github.context.repo.repo,
       title,
       body,
-      assignees: assignees ? assignees.split("\n") : undefined,
+      assignees: assignees ? assignees.split(`\n`) : undefined,
     });
 
     core.setOutput("issue", response.data);
