@@ -1,5 +1,5 @@
-name: "Open a Github Issue (Testing)"
-author: Ali Alaa
+name: "Open a Github Issue (Mck3nz1e)"
+author: Scott McKenzie
 description: "Opens a github issue"
 inputs:
   token:
